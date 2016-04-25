@@ -15,6 +15,9 @@
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"></listener>
+    </listeners>
     <filter>
         <whitelist>
             <directory>./lib//</directory>
