@@ -1,0 +1,23 @@
+{
+    "name": "claudusd/message-tracker",
+    "description": "Tracking message",
+    "keywords": ["message queue", "message", "tracker"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Claude Dioudonnat",
+            "email": "claude@dioudonnat.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Claudusd\\MessageTracker\\": "lib/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Claudusd\\MessageTracker\\Tests\\": "tests/" }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.3",
+        "mockery/mockery": "^0.9.4"
+    }
+}
