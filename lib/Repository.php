@@ -2,6 +2,8 @@
 
 namespace Claudusd\MessageTracker;
 
+use Claudusd\MessageTracker\Exception\TrackingNotFoundException;
+
 interface Repository
 {
     /**
@@ -23,6 +25,7 @@ interface Repository
      *
      * @param string $trackingId
      * @return Tracking
+     * @throws TrackingNotFoundException If the tracking id is not found in the dataset.
      */
     public function get($trackingId);
 }
