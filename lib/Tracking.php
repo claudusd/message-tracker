@@ -5,6 +5,11 @@ namespace Claudusd\MessageTracker;
 class Tracking
 {
     /**
+     * @var string
+     */
+    protected $id;
+
+    /**
      * @var Error[]
      */
     protected $errors;
@@ -15,11 +20,20 @@ class Tracking
     protected $state;
 
     /**
-     *
+     * @var string $id
      */
-    public function __construct()
+    public function __construct($id)
     {
+        $this->id = $id;
         $this->errors = array();   
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
