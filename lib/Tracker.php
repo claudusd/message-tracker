@@ -30,7 +30,7 @@ class Tracker
      */
     public function registerMessage(Traceable $traceable)
     {
-        $tracking = new Tracking();
+        $tracking = new Tracking($traceable->getTrackingId());
         $this->repository->persist($tracking);                  
     }
 

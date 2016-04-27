@@ -28,7 +28,10 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisterMessage()
     {
-        $mockedTraceable = M::mock('Claudusd\MessageTracker\Traceable');
+        $mockedTraceable = M::mock('Claudusd\MessageTracker\Traceable',
+            [
+                'getTrackingId' => 'foo'
+            ]);
 
         $this->mockedRepository->shouldReceive('persist')
             ->with(M::on(function($arg){
