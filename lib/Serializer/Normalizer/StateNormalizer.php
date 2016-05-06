@@ -2,16 +2,14 @@
 
 namespace Claudusd\MessageTracker\Serializer\Normalizer;
 
-use Claudusd\MessageTracker\Error;
 use Claudusd\MessageTracker\State;
-use Claudusd\MessageTracker\Tracking;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class TrackingNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
+class StateNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
     /**
      * @var SerializerInterface|DenormalizerInterface|NormalizerInterface
@@ -35,25 +33,12 @@ class TrackingNormalizer implements NormalizerInterface, DenormalizerInterface, 
      */
     public function normalize($object, $format = null, array $context = array())
     {
-        $dataNormalized = [
-            'id' => $object->getId(),
-            'state' => $this->serializer->normalize($object->getState(), $format, $context)
-        ];
-
-        $errorNormalized = [];
-        foreach ($object->getErrors() as $error) {
-            $errorNormalized[] = $this->serializer->normalize($error, $format, $context);
-        }
-        if (!empty($errorNormalized)) {
-            $dataNormalized['errors'] = $errorNormalized;
-        }
-
-        return $dataNormalized;
+        return $object->__toString();
     }
 
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof Tracking;
+        return $data instanceof State;
     }
 
     /**
@@ -61,15 +46,7 @@ class TrackingNormalizer implements NormalizerInterface, DenormalizerInterface, 
      */
     public function denormalize($data, $class, $format = null, array $context = array())
     {
-        $tracking = new Tracking(
-            $data['id'],
-            $this->serializer->denormalize($data['state'], State::class, $format, $context)
-        );
-        $errors = $this->serializer->denormalize($data['errors'], Error::class.'[]', $format, $context);
-        foreach ($errors as $error) {
-            $tracking->addError($error);
-        }
-        return $tracking;
+        return new State($data);
     }
 
     /**
@@ -77,6 +54,6 @@ class TrackingNormalizer implements NormalizerInterface, DenormalizerInterface, 
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type == Tracking::class;
+        return $type == State::class;
     }
 }
