@@ -15,17 +15,19 @@ class Tracking
     protected $errors;
 
     /**
-     * @var
+     * @var State
      */
     protected $state;
 
     /**
-     * @var string $id
+     * @param $id
+     * @param State|null $state
      */
-    public function __construct($id)
+    public function __construct($id, State $state = null)
     {
         $this->id = $id;
-        $this->errors = array();   
+        $this->errors = array();
+        $this->state = $state ? $state : new State();
     }
 
     /**
@@ -39,7 +41,7 @@ class Tracking
     /**
      *
      *
-     * @return 
+     * @return State
      */
     public function getState()
     {
